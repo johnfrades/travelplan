@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Homepage</title>
+</head>
+<body>
+
+
+<form action="/" method="POST">
+<select id="cat" name="theSelected">
+	<option val="car">car</option>
+	<option val="phone">phone</option>
+</select>
+
+
+<select id="item" name="secondSelected">
+	
+</select>
+
+<button>Submit</button>
+</form>
+
+
+
+<form action='/addcity' method="POST">
+	<label>City Name</label>
+	<input type="text" name="city">
+
+	<button>Submit</button>
+</form>
+
+<form action="/addcoolplace" method="POST">
+	<select id="theCity" name="cityname">
+		<% City.forEach(function(City){ %>
+		<option val="<%= City.thecity %>"><%= City.thecity %></option>
+		<% }); %>
+	</select>
+
+	<label>Place Name</label>
+	<input type="text" name="placename">
+
+	<label>Place Address</label>
+	<input type="text" name="placeaddress">
+
+	<button>Submit new place</button>
+
+</form>
+
+
+
+
+<script type="text/javascript" src="/javascript/jquery.min.js"></script>
+<script type="text/javascript" src="/javascript/main.js"></script>
+</body>
+</html>

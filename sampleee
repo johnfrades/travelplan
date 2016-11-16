@@ -1,0 +1,57 @@
+{
+    "places": 
+        
+        {
+            "Auckland": [
+            
+                {
+                    "Name": "Sky Tower",
+                    "Address": "Victoria St W & Federal St, Auckland 1010"
+                },
+
+                {
+                    "Name": "Auckland Art Gallery",
+                    "Address": "Corner Kitchener and Wellesley Streets, Auckland 1010"
+                },
+
+                {   "Name": "Auckland Harbour Bridge",
+                    "Address": "Westhaven, Auckland 1011"
+                }
+
+            ],
+        
+            "Queenstown": [
+        
+                {
+                    "Name": "Skycity Queenstown",
+                    "Address": "16-24 Beach Street, Queenstown 9300"
+                },
+
+                {
+                    "Name": "Lake Wanaka",
+                    "Address": "Lake Wanaka, Minaret Bay, Otago"
+                },
+
+                {   
+                    "Name": "Skippers Canyon",
+                    "Address": "Skippers Canyon Jet, Skippers, Otago"
+                }
+            ],
+
+        
+            "Taupo": [
+        
+                {
+                    "Name": "Huka Falls",
+                    "Address": "Huka Falls, Taupo"
+                },
+
+                {
+                    "Name": "Huka Prawn Park",
+                    "Address": "Huka Prawn Park, Karetoto Road, Wairakei 3377"
+                }
+               
+             ]
+        }
+
+}
