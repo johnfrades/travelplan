@@ -29,11 +29,12 @@
 	<button>Submit</button>
 </form>
 
+
+<%= thecoolplace%>
+
 <form action="/addcoolplace" method="POST">
 	<select id="theCity" name="cityname">
-		<% City.forEach(function(City){ %>
-		<option val="<%= City.thecity %>"><%= City.thecity %></option>
-		<% }); %>
+
 	</select>
 
 	<label>Place Name</label>
@@ -47,9 +48,7 @@
 </form>
 
 	<select id="cities" name="thecityname">
-		<% City.forEach(function(city){ %>
-			<option val="<%= city.thecity %>"><%= city.thecity %></option>
-		<% }); %>
+
 	</select>
 
 <select id="coolplace" name="thecities">

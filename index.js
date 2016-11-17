@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
 
-
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs')
@@ -46,7 +46,7 @@ var CoolPlace = mongoose.model('Coolplace', coolplaceSchema)
 
 
 app.get('/', function(req, res){
-	City.find({}, function(err, theCities){
+	City.find({}).populate('coolplaces').exec(function(err, theCities){
 		if(err){
 			console.log(err);
 		} else {
@@ -54,6 +54,35 @@ app.get('/', function(req, res){
 		}
 	});
 });
+
+app.get('/test', function(req, res){
+	City.findOne({'thecity': 'Auckland'}).populate('coolplaces').exec(function(err, thecoolplace){
+		if(err){
+			console.log(err);
+		} else {
+			res.send(thecoolplace);
+		}
+	});
+});
+
+app.post('/testpost', function(req, res){
+	City.findOne({'thecity': req.body.thecity}).populate('coolplaces').exec(function(err, thecoolplace){
+		if(err){
+			console.log(err);
+		} else {
+			//res.send(thecoolplace);
+			// res.render('test', {thecoolplace: thecoolplace});
+			res.send(thecoolplace);
+		}
+	});
+});
+
+
+app.post('/hoy', function(req, res){
+	console.log('hhh' + req.body.thecity);
+
+
+})
 
 app.post('/', function(req, res){
 	console.log(req.body);
