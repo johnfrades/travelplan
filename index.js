@@ -9,8 +9,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs')
 
-mongoose.connect('mongodb://localhost/travelplan');
-
+//mongoose.connect('mongodb://localhost/travelplan');
+mongoose.connect('mongodb://admin:admin>@ds157487.mlab.com:57487/travelplan');
 
 
 var destinationSchema = new mongoose.Schema({
@@ -132,6 +132,6 @@ app.post('/addcoolplace', function(req, res){
 	});
 });
 
-app.listen('3000', function(req, res){
+app.listen(process.env.PORT, function(req, res){
 	console.log('server started at PORT 3000');
 });

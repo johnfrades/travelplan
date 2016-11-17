@@ -2,6 +2,9 @@
 <html>
 <head>
 	<title>Homepage</title>
+
+
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
 </head>
 <body>
 
@@ -46,16 +49,52 @@
 
 </form>
 
+<div class="container text-center">
+<h1>Find a Place</h1>
 	<select id="cities" name="thecityname">
 		<% City.forEach(function(city){ %>
 			<option val="<%= city.thecity %>"><%= city.thecity %></option>
 		<% }); %>
 	</select>
 
-<select id="coolplace" name="thecities">
-	
-</select>
+	<select id="coolplace" name="thecities">
 
+	</select>
+
+	<div id='showmap'>
+
+	</div>
+</div>
+
+<div class="container text-center">
+<h1>Find the distance between the two</h1>
+	<h2>From:</h2>
+	<select id="fromcity" name="thecityname">
+		<% City.forEach(function(city){ %>
+			<option val="<%= city.thecity %>"><%= city.thecity %></option>
+		<% }); %>
+	</select>
+
+	<select id="fromplace" name="thecities">
+
+	</select>
+
+	<h2>To:</h2>
+	<select id="tocity" name="thecityname">
+	<% City.forEach(function(city){ %>
+		<option val="<%= city.thecity %>"><%= city.thecity %></option>
+	<% }); %>
+	</select>
+	<select id="toplace" name="thecities">
+
+	</select>
+		<button id="distanceBTN">Go</button>
+	<div id='toshowmap'>
+
+	</div>
+
+
+</div>
 
 <script type="text/javascript" src="/javascript/jquery.min.js"></script>
 <script type="text/javascript" src="/javascript/main.js"></script>
