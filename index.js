@@ -132,6 +132,6 @@ app.post('/addcoolplace', function(req, res){
 	});
 });
 
-app.listen(process.env.PORT, function(req, res){
+app.listen('3000', function(req, res){
 	console.log('server started at PORT 3000');
 });
