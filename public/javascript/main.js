@@ -20,18 +20,12 @@ populateSelect();
 
 $(function(){
 
-
+	$('#addCityBTN').click(function(){
+		newCity();
+	});
 
 	$('#cat').change(function(){
 		populateSelect();
-	});
-
-	$('#cities').change(function(){
-		popPlaces();
-	});
-
-	$('#coolplace').change(function(){
-		mapReveal();
 	});
 
 
@@ -104,44 +98,6 @@ function fillupPlaces(){
 	});
 }
 
-
-function popPlaces(){
-	$('.dank').remove();
-	var thedata = {
-		'thecity': $('#cities').val()
-	};
-
-
-	$.ajax({
-		type: 'POST',
-		url: '/testpost',
-		data: JSON.stringify(thedata),
-		contentType: 'application/json',
-		dataType: 'json',
-		success: function(data){
-			data.coolplaces.forEach(function(place){
-				$('#coolplace').append('<option class="dank">' + place.theplacename + '</option>');
-				
-			});
-		},
-		error: function(){
-			alert('No data');
-		}
-	});
-}
-
-
-function mapReveal(){
-	$('.googlemap').remove();
-	var loc = $('#coolplace').val();
-
-	var code1 = '<iframe class="googlemap" width="100%" height="600" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDt1ugu_lMqa5w_awcfwZ26ubW2EjvhY0M&q=';
-	var code2 = loc + '"';
-	var code4 = ' allowfullscreen> </iframe>'
-	var allcode = code1 + code2 + code4;
-	$('#showmap').append(allcode);
-
-	}
 
 
 function distanceShow(){
@@ -258,4 +214,29 @@ function generateToMap(){
 	var code4 = ' allowfullscreen> </iframe>'
 	var allcode = code1 + code2 + code4;
 	$('#themap2').append(allcode);
+}
+
+function newCity(){
+
+	var createCity = {
+		cityNew: $('#cityInput').val() 
+	}
+
+	var theCity = JSON.stringify(createCity);
+
+	$.ajax({
+		url: '/addcity',
+		type: 'POST',
+		data: theCity,
+		contentType: 'application/json',
+		dataType: 'json',
+		success: function(data){
+			alert(JSON.stringify(data));
+		},
+		error: function(err){
+			alert(err);
+		}
+	});
+
+	$('#cityInput').val('');
 }

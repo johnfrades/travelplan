@@ -25,12 +25,12 @@
 
 
 
-<form action='/addcity' method="POST">
-	<label>City Name</label>
-	<input type="text" name="city">
 
-	<button>Submit</button>
-</form>
+	<label>City Name</label>
+	<input type="text" id="cityInput" name="city">
+
+	<button id="addCityBTN">Submit</button>
+
 
 <form action="/addcoolplace" method="POST">
 	<select id="theCity" name="cityname">
@@ -52,23 +52,6 @@
 
 </form>
 
-<div class="container text-center">
-<span id="distanceTime"></span>
-<h1>Find a Place</h1>
-	<select id="cities" name="thecityname">
-		<% City.forEach(function(city){ %>
-			<option val="<%= city.thecity %>"><%= city.thecity %></option>
-		<% }); %>
-	</select>
-
-	<select id="coolplace" name="thecities">
-
-	</select>
-
-	<div id='showmap'>
-
-	</div>
-</div>
 
 <div class="container text-center">
 <h1>Find the distance between the two</h1>

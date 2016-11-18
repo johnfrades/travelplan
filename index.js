@@ -11,8 +11,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs')
 
-//mongoose.connect('mongodb://localhost/travelplan');
-mongoose.connect('mongodb://admin:admin@ds157487.mlab.com:57487/travelplan');
+mongoose.connect('mongodb://localhost/travelplan');
+//mongoose.connect('mongodb://admin:admin@ds157487.mlab.com:57487/travelplan');
 
 
 var destinationSchema = new mongoose.Schema({
@@ -139,18 +139,19 @@ app.post('/', function(req, res){
 
 app.post('/addcity', function(req, res){
 	var newCity = {
-		thecity: req.body.city
+		thecity: req.body.cityNew
 	}
 
 	City.create(newCity, function(err, createdCity){
-		res.redirect('/');
+		console.log(createdCity);
+		res.send(createdCity);
 	});
 });
 
 
 
 app.post('/addcoolplace', function(req, res){
-	console.log(req.body.cityname + 'citynameeeeeeeeeeeeeeeeeeeeeo');
+
 	var thePlace = {
 		theplacename: req.body.placename,
 		theplaceaddress: req.body.placeaddress,
@@ -161,7 +162,6 @@ app.post('/addcoolplace', function(req, res){
 	}
 
 	var Ccity = theCity.toString();
-	console.log(req.body.cityname + 'CCCCCC')
 
 	CoolPlace.create(thePlace, function(err, newCoolplace){
 		if(err){
