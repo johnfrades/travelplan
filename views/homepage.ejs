@@ -45,11 +45,15 @@
 	<label>Place Address</label>
 	<input type="text" name="placeaddress">
 
+	<label>Google Valid map search</label>
+	<input type="text" name="googlevalidsearch">
+
 	<button>Submit new place</button>
 
 </form>
 
 <div class="container text-center">
+<span id="distanceTime"></span>
 <h1>Find a Place</h1>
 	<select id="cities" name="thecityname">
 		<% City.forEach(function(city){ %>
@@ -68,17 +72,21 @@
 
 <div class="container text-center">
 <h1>Find the distance between the two</h1>
-	<h2>From:</h2>
-	<select id="fromcity" name="thecityname">
-		<% City.forEach(function(city){ %>
-			<option val="<%= city.thecity %>"><%= city.thecity %></option>
-		<% }); %>
-	</select>
+<div class="row">
+	<div class="col-md-6">
+		<h2>From:</h2>
+		<select id="fromcity" name="thecityname">
+			<% City.forEach(function(city){ %>
+				<option val="<%= city.thecity %>"><%= city.thecity %></option>
+			<% }); %>
+		</select>
 
-	<select id="fromplace" name="thecities">
+		<select id="fromplace" name="thecities">
 
-	</select>
+		</select>
+	</div>
 
+	<div class="col-md-6">
 	<h2>To:</h2>
 	<select id="tocity" name="thecityname">
 	<% City.forEach(function(city){ %>
@@ -89,6 +97,18 @@
 
 	</select>
 		<button id="distanceBTN">Go</button>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6" id="themap1">
+
+	</div>
+	<div class="col-md-6" id="themap2">
+
+	</div>
+</div>
+
 	<div id='toshowmap'>
 
 	</div>

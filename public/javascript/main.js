@@ -39,6 +39,14 @@ $(function(){
 		popFromPlaces();
 	});
 
+	$('#fromplace').change(function(){
+		generateFromMap();
+	});
+
+	$('#toplace').change(function(){
+		generateToMap();
+	});
+
 	$('#tocity').change(function(){
 		popToPlaces();
 	});
@@ -46,6 +54,13 @@ $(function(){
 
 	$('#distanceBTN').click(function(){
 		distanceShow();
+	});
+
+
+
+	//test
+	$('#fromplace').change(function(){
+		console.log($('#fromplace').val());
 	});
 
 
@@ -131,6 +146,15 @@ function mapReveal(){
 
 function distanceShow(){
 	$('.googlemaps2').remove();
+	$('.fromplacegooglemap').remove();
+	$('.toplacegooglemap').remove();
+
+	var theDistance = {
+		fromplace: $('#fromplace').val(),
+		toplace:  $('#toplace').val()
+	}
+
+
 
 	var code1 = '<iframe class="googlemaps2" width="100%" height="600" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDt1ugu_lMqa5w_awcfwZ26ubW2EjvhY0M&origin=';
 	var code2 = $('#fromplace').val();
@@ -139,8 +163,21 @@ function distanceShow(){
 	var code5 = code1 + code2 + code3 + code4;
 
 	$('#toshowmap').append(code5);
-	
-	
+
+	$.ajax({
+		type: 'POST',
+		url: '/mapgoogle',
+		data: JSON.stringify(theDistance),
+		contentType: 'application/json',
+		dataType: 'json',
+		success: function(data){
+			console.log(JSON.stringify(data.distance.text + ' ' + data.duration.text));
+			$('#distanceTime').append('<h1>' + JSON.stringify(data.distance.text + ' ' + data.duration.text) + '</h1>')
+		},
+		error: function(error){
+			console.log(error);
+		}
+	});
 }
 
 
@@ -152,6 +189,7 @@ function popFromPlaces(){
 	};
 
 
+
 	$.ajax({
 		type: 'POST',
 		url: '/testpost',
@@ -160,7 +198,11 @@ function popFromPlaces(){
 		dataType: 'json',
 		success: function(data){
 			data.coolplaces.forEach(function(place){
-				$('#fromplace').append('<option class="fromThePlace">' + place.theplacename + '</option>');
+					var code1 = '<option class="fromThePlace" value="';
+					var code2 = place.googleValidSearch + '">';
+					var code3 = place.theplacename + '</option>';
+					var code4 = code1 + code2 + code3;
+				$('#fromplace').append(code4);
 				
 			});
 		},
@@ -193,4 +235,27 @@ function popToPlaces(){
 			alert('No data');
 		}
 	});
+}
+
+
+function generateFromMap(){
+	$('.fromplacegooglemap').remove();
+	var fromPlace = $('#fromplace').val();
+
+	var code1 = '<iframe class="fromplacegooglemap" width="100%" height="600" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDt1ugu_lMqa5w_awcfwZ26ubW2EjvhY0M&q=';
+	var code2 = fromPlace + '"';
+	var code4 = ' allowfullscreen> </iframe>'
+	var allcode = code1 + code2 + code4;
+	$('#themap1').append(allcode);
+}
+
+function generateToMap(){
+	$('.toplacegooglemap').remove();
+	var toPlace = $('#toplace').val();
+
+	var code1 = '<iframe class="toplacegooglemap" width="100%" height="600" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDt1ugu_lMqa5w_awcfwZ26ubW2EjvhY0M&q=';
+	var code2 = toPlace + '"';
+	var code4 = ' allowfullscreen> </iframe>'
+	var allcode = code1 + code2 + code4;
+	$('#themap2').append(allcode);
 }

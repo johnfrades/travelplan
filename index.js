@@ -2,7 +2,9 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-
+var googleMapsClient = require('@google/maps').createClient({
+  key: 'AIzaSyDt1ugu_lMqa5w_awcfwZ26ubW2EjvhY0M'
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -36,7 +38,8 @@ var citySchema = new mongoose.Schema({
 
 var coolplaceSchema = new mongoose.Schema({
 	theplacename: String,
-	theplaceaddress: String
+	theplaceaddress: String,
+	googleValidSearch: String
 });
 
 
@@ -55,12 +58,57 @@ app.get('/', function(req, res){
 	});
 });
 
+
+
 app.get('/test', function(req, res){
 	City.findOne({'thecity': 'Auckland'}).populate('coolplaces').exec(function(err, thecoolplace){
 		if(err){
 			console.log(err);
 		} else {
 			res.send(thecoolplace);
+		}
+	});
+});
+
+app.get('/mapgoogle', function(req, res){
+	googleMapsClient.distanceMatrix({
+		origins: 'skytower auckland',
+		destinations: '85 Airedale St, Auckland, 1010, New Zealand',
+		language: 'en',
+		units: 'metric',
+		region: 'nz'
+	}, function(err, theMap){
+		if(err){
+			console.log(err);
+		} else {
+			theMap.json.rows.forEach(function(distanceTime){
+				distanceTime.elements.forEach(function(result){
+					res.send(result.duration.text + result.distance.text);
+				});
+			});			
+		}
+	});
+});
+
+
+app.post('/mapgoogle', function(req, res){
+	console.log(req.body.fromplace);
+	console.log(req.body.toplace);
+	googleMapsClient.distanceMatrix({
+		origins: req.body.fromplace,
+		destinations: req.body.toplace,
+		language: 'en',
+		units: 'metric',
+		region: 'nz'
+	}, function(err, theMap){
+		if(err){
+			console.log(err);
+		} else {
+			theMap.json.rows.forEach(function(distanceTime){
+				distanceTime.elements.forEach(function(result){
+					res.send(result);
+				});
+			});			
 		}
 	});
 });
@@ -105,7 +153,8 @@ app.post('/addcoolplace', function(req, res){
 	console.log(req.body.cityname + 'citynameeeeeeeeeeeeeeeeeeeeeo');
 	var thePlace = {
 		theplacename: req.body.placename,
-		theplaceaddress: req.body.placeaddress
+		theplaceaddress: req.body.placeaddress,
+		googleValidSearch: req.body.googlevalidsearch
 	}
 	var theCity = {
 		cityname: req.body.cityname
@@ -132,6 +181,7 @@ app.post('/addcoolplace', function(req, res){
 	});
 });
 
-app.listen(process.env.PORT, function(req, res){
+
+app.listen('3000', function(req, res){
 	console.log('server started at PORT 3000');
 });
